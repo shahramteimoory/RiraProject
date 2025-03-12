@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Rira.Application.Interfaces.Context;
+using Rira.Application.Interfaces.Facade;
+using Rira.Application.Services.PersonServices.Facade;
 using Rira.Persistance.SqlServer.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +11,7 @@ builder.Services.AddDbContext<DataBaseContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
-
+builder.Services.AddScoped<IPersonFacade, PersonFacade>();
 builder.Services.AddOpenApi();
 
 var app = builder.Build();

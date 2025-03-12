@@ -1,6 +1,0 @@
-@Rira.Api_HostAddress = http://localhost:5173
-
-GET {{Rira.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 
 namespace Rira.Common.Utilities
 {
@@ -327,18 +322,17 @@ namespace Rira.Common.Utilities
             return dateTime;
         }
 
-        public static bool PersianDateIsValid(string strDate)
+        public static bool IsValidBirthDate(DateTime birthDate)
         {
-            try
-            {
-                string[] strings = strDate.Split("/");
-                DateTime dateTime = new DateTime(int.Parse(strings[0]), int.Parse(strings[1]), int.Parse(strings[2]), myPersianCalender);
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            var persianCalendar = new PersianCalendar();
+
+            return birthDate <= DateTime.Today &&
+                   birthDate == persianCalendar.ToDateTime(
+                       persianCalendar.GetYear(birthDate),
+                       persianCalendar.GetMonth(birthDate),
+                       persianCalendar.GetDayOfMonth(birthDate),
+                       0, 0, 0, 0);
         }
+
     }
 }

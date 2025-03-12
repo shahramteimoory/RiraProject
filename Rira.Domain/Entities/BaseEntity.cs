@@ -6,7 +6,7 @@ namespace Rira.Domain.Entities
     {
         [Key]
         public T Id { get; set; }
-        public required DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime? UpdatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
         public bool IsDeleted { get; set; }
