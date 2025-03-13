@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+option csharp_namespace = "Rira.Api.Protos";
+
+
+service PersonService
+{
+	rpc InsertPersonAsync(InsertPersonRequest) returns(ApiResultProt);
+    rpc UpdatePersonAsync(UpdatePersonRequest) returns(ApiResultUpdatePerson);
+    rpc SoftDeleteAsync(IdRequest) returns(ApiResultProt);
+    rpc HardDeleteAsync(IdRequest) returns(ApiResultProt);
+    rpc GetPersonAsync(IdRequest) returns(ApiResultGetPerson);
+    rpc GetAsync(EmptyRequest) returns(ApiResultGetPeople);
+}
+
+message InsertPersonRequest
+{
+	string FirstName=1;
+    string LastName=2;
+    string NationalCode=3;
+    string DateOfBirth=4;
+}
+
+message UpdatePersonRequest
+{
+    int64 Id=1;
+	string FirstName=2;
+    string LastName=3;
+    string NationalCode=4;
+    string DateOfBirth=5;
+}
+
+message ApiResultProt
+{
+   bool IsSuccess=1;
+   repeated string Messages=2;
+   int32 StatusCode=3;
+}
+
+message ApiResultUpdatePerson {
+    bool IsSuccess = 1;
+    repeated string Messages = 2;
+    int32 StatusCode = 3;
+    
+    oneof data {
+        UpdatePersonRequest Data = 4;
+    }
+}
+
+message IdRequest {
+    int64 Id = 1;
+}
+
+message PersonResponse
+{
+    int64 Id=1;
+    string FirstName=2;
+    string LastName=3;
+    string NationalCode=4;
+    string DateOfBirth=5;
+    string RegisterDate=6;
+}
+
+message ApiResultGetPerson {
+    bool IsSuccess = 1;
+    repeated string Messages = 2;
+    int32 StatusCode = 3;
+    
+    oneof data {
+        PersonResponse Data = 4;
+    }
+}
+
+message ApiResultGetPeople {
+    bool IsSuccess = 1;
+    repeated string Messages = 2;
+    int32 StatusCode = 3;
+    
+    repeated PersonResponse Data = 4;
+}
+
+message EmptyRequest {}

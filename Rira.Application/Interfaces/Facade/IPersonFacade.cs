@@ -1,6 +1,7 @@
 ﻿using Rira.Application.Services.PersonServices.Command;
 using Rira.Application.Services.PersonServices.Command.Models;
 using Rira.Application.Services.PersonServices.Command.Validator;
+using Rira.Application.Services.PersonServices.Query;
 
 namespace Rira.Application.Interfaces.Facade
 {
@@ -8,5 +9,7 @@ namespace Rira.Application.Interfaces.Facade
     {
         IPersonManagmentServices PersonCommands { get; }
         PersonValidator<PersonRequestDtoBase> CommandsValidator { get; }
+
+        IGetPersonManagmentServices PersonQuerys { get; }
     }
 }

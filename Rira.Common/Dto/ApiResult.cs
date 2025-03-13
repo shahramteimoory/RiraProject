@@ -25,7 +25,7 @@ namespace Rira.Common.Dto
             new() { IsSuccess = false, StatusCode = HttpStatusCode.InternalServerError, Messages = [message] };
 
         public static ApiResult NotFound(string message = AlertConstats.NotFound) =>
-            new() { IsSuccess = false, StatusCode = HttpStatusCode.InternalServerError, Messages = [message] };
+            new() { IsSuccess = false, StatusCode = HttpStatusCode.NotFound, Messages = [message] };
     }
     public record ApiResult<T>
     {
@@ -50,6 +50,6 @@ namespace Rira.Common.Dto
             new() { IsSuccess = false, StatusCode = HttpStatusCode.InternalServerError, Messages = [message] };
 
         public static ApiResult<T> NotFound(string message = AlertConstats.NotFound) =>
-            new() { IsSuccess = false, StatusCode = HttpStatusCode.InternalServerError, Messages = [message] };
+            new() { IsSuccess = false, StatusCode = HttpStatusCode.NotFound, Messages = [message] };
     }
 }

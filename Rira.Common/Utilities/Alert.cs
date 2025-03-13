@@ -15,14 +15,6 @@ namespace Rira.Common.Utilities
         {
             return $"{entity.GetDescription()} با موفقیت ثبت گردید";
         }
-        public static string GetDeleteAlert(EnumEntity entity)
-        {
-            return $"{entity.GetDescription()} با موفقیت حذف گردید";
-        }
-        public static string GetUpdateAlert(EnumEntity entity)
-        {
-            return $"{entity.GetDescription()} با موفقیت ویرایش گردید";
-        }
         public enum Public
         {
             [Description("خطایی سمت سرور رخ داده است")]
@@ -62,15 +54,5 @@ namespace Rira.Common.Utilities
             return $"{field.GetDescription()} را وارد کنید";
 
         }
-    }
-
-    public static class AlertConstats
-    {
-        public const string TaskSuccess = "عملیات موفقیت‌آمیز بود.";
-        public const string TaskCreated = "ایجاد با موفقیت انجام شد.";
-        public const string BadRequestMessage = "داده‌های ارسالی نامعتبر هستند.";
-        public const string ConflictMessage = "رکورد موردنظر قبلاً ثبت شده است.";
-        public const string InternalServerErrorMessage = "خطای داخلی سرور رخ داده است.";
-        public const string NotFound = "موردی یافت نشد";
     }
 }

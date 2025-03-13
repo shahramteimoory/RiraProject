@@ -13,6 +13,7 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0-noble AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Rira.Api/Rira.Api.csproj", "Rira.Api/"]
+COPY ["Rira.Common/Rira.Common.csproj", "Rira.Common/"]
 COPY ["Rira.Persistance/Rira.Persistance.csproj", "Rira.Persistance/"]
 COPY ["Rira.Application/Rira.Application.csproj", "Rira.Application/"]
 COPY ["Rira.Domain/Rira.Domain.csproj", "Rira.Domain/"]

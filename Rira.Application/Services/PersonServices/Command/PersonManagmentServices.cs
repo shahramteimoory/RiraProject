@@ -9,7 +9,7 @@ namespace Rira.Application.Services.PersonServices.Command
 {
     public class PersonManagmentServices(IDataBaseContext context) : BaseService(context), IPersonManagmentServices
     {
-        public async Task<ApiResult> Insert(InsertPersonRequestDto request)
+        public async Task<ApiResult> InsertAsync(InsertPersonRequestDto request)
         {
 
             var isDuplicate = await Table<Person>()
@@ -23,7 +23,7 @@ namespace Rira.Application.Services.PersonServices.Command
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 NationalCode = request.NationalCode,
-                DateOfBirth = request.DateOfBirth
+                DateOfBirth =PersianDate.ToGregorianDate(request.DateOfBirth)
             };
             await InsertAsync(person);
             await Save();
@@ -31,7 +31,7 @@ namespace Rira.Application.Services.PersonServices.Command
             return ApiResult.Created(Alert.GetInsertAlert(Alert.EnumEntity.Person));
         }
 
-        public async Task<ApiResult<UpdatePersonRequestDto>> Update(UpdatePersonRequestDto request)
+        public async Task<ApiResult<UpdatePersonRequestDto>> UpdateAsync(UpdatePersonRequestDto request)
         {
             var person = await GetById<Person>(request.Id);
 
@@ -41,7 +41,7 @@ namespace Rira.Application.Services.PersonServices.Command
             person.FirstName = request.FirstName;
             person.LastName = request.LastName;
             person.NationalCode = request.NationalCode;
-            person.DateOfBirth = request.DateOfBirth;
+            person.DateOfBirth = PersianDate.ToGregorianDate(request.DateOfBirth);
             person.UpdatedAt = DateTime.Now;
 
             Update(person);
@@ -50,7 +50,7 @@ namespace Rira.Application.Services.PersonServices.Command
             return ApiResult<UpdatePersonRequestDto>.Success(request);
         }
 
-        public async Task<ApiResult> SoftDelete(long id)
+        public async Task<ApiResult> SoftDeleteAsync(long id)
         {
             var person = await GetById<Person>(id);
 
@@ -66,7 +66,7 @@ namespace Rira.Application.Services.PersonServices.Command
             return ApiResult.Success();
         }
 
-        public async Task<ApiResult> HardDelete(long id)
+        public async Task<ApiResult> HardDeleteAsync(long id)
         {
             var person = await GetById<Person>(id);
 
