@@ -4,6 +4,7 @@ using Rira.Application.Interfaces.Context;
 using Rira.Application.Interfaces.Facade;
 using Rira.Application.Services.PersonServices.Facade;
 using Rira.Persistance.SqlServer.Context;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +20,14 @@ builder.Services.AddScoped<IDataBaseContext, DataBaseContext>();
 builder.Services.AddScoped<IPersonFacade, PersonFacade>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-var app = builder.Build();
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.DatadogLogs("a9ef7c051f9c550def96386c85f3a1c2")
+    .MinimumLevel.Error()
+    .CreateLogger();
 
+builder.Host.UseSerilog(); 
+
+var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -31,8 +38,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while migrating the database.");
+        Log.Error(ex, "An error occurred while migrating the database.");
     }
 }
 app.UseRouting();

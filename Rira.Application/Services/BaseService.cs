@@ -127,7 +127,7 @@ namespace Rira.Application.Services
         }
 
 
-        protected Task<int> Save()
+        protected Task<int> SaveAsync()
         {
             var result = _context.SaveChangesAsync();
 
@@ -152,7 +152,7 @@ namespace Rira.Application.Services
         }
 
 
-        protected virtual Task<T> GetById<T>(long entityId) where T : BaseEntity
+        protected virtual Task<T> GetByIdAsync<T>(long entityId) where T : BaseEntity
         {
             return Table<T>().SingleOrDefaultAsync(x => x.Id == entityId);
         }

@@ -108,22 +108,30 @@ namespace Rira.Common.Utilities
                 return false;
 
             var parts = shamsiDate.Split('/');
-            int year = int.Parse(parts[0]);
-            int month = int.Parse(parts[1]);
-            int day = int.Parse(parts[2]);
+            if (parts.Length != 3) return false;
 
-            if (year < 1300 || year > 1500)
+            if (!int.TryParse(parts[0], out int year) ||
+                !int.TryParse(parts[1], out int month) ||
+                !int.TryParse(parts[2], out int day))
                 return false;
 
-            try
-            {
-                DateTime birthDate = _persianCalendar.ToDateTime(year, month, day, 0, 0, 0, 0);
-                return birthDate <= DateTime.Today;
-            }
-            catch
+            if (year < 1300 || year > 1500 || month < 1 || month > 12 || day < 1 || day > 31)
+                return false;
+
+            var persianCalendar = new PersianCalendar();
+            var today = DateTime.Today;
+            int todayYear = persianCalendar.GetYear(today);
+            int todayMonth = persianCalendar.GetMonth(today);
+            int todayDay = persianCalendar.GetDayOfMonth(today);
+
+            if (year > todayYear ||
+                (year == todayYear && month > todayMonth) ||
+                (year == todayYear && month == todayMonth && day > todayDay))
             {
                 return false;
             }
+
+            return true;
         }
 
     }

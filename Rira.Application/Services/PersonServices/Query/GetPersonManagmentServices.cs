@@ -11,7 +11,7 @@ namespace Rira.Application.Services.PersonServices.Query
     {
         public async Task<ApiResult<PersonResponseDto>> GetAsync(long id)
         {
-            var person = await GetById<Person>(id);
+            var person = await GetByIdAsync<Person>(id);
             if (person is null)
                 return ApiResult<PersonResponseDto>.NotFound();
 

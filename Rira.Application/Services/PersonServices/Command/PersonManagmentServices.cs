@@ -26,14 +26,14 @@ namespace Rira.Application.Services.PersonServices.Command
                 DateOfBirth =PersianDate.ToGregorianDate(request.DateOfBirth)
             };
             await InsertAsync(person);
-            await Save();
+            await SaveAsync();
 
             return ApiResult.Created(Alert.GetInsertAlert(Alert.EnumEntity.Person));
         }
 
         public async Task<ApiResult<UpdatePersonRequestDto>> UpdateAsync(UpdatePersonRequestDto request)
         {
-            var person = await GetById<Person>(request.Id);
+            var person = await GetByIdAsync<Person>(request.Id);
 
             if (person is null)
                 return ApiResult<UpdatePersonRequestDto>.NotFound();
@@ -45,14 +45,14 @@ namespace Rira.Application.Services.PersonServices.Command
             person.UpdatedAt = DateTime.Now;
 
             Update(person);
-            await Save();
+            await SaveAsync();
 
             return ApiResult<UpdatePersonRequestDto>.Success(request);
         }
 
         public async Task<ApiResult> SoftDeleteAsync(long id)
         {
-            var person = await GetById<Person>(id);
+            var person = await GetByIdAsync<Person>(id);
 
             if (person is null)
                 return ApiResult.NotFound();
@@ -61,20 +61,20 @@ namespace Rira.Application.Services.PersonServices.Command
             person.DeletedAt = DateTime.Now;
 
             Update(person);
-            await Save();
+            await SaveAsync();
 
             return ApiResult.Success();
         }
 
         public async Task<ApiResult> HardDeleteAsync(long id)
         {
-            var person = await GetById<Person>(id);
+            var person = await GetByIdAsync<Person>(id);
 
             if (person is null)
                 return ApiResult.NotFound();
 
             Delete(person);
-            await Save();
+            await SaveAsync();
 
             return ApiResult.Success();
         }
